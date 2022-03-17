@@ -1,8 +1,11 @@
 <%- include('partials/header') -%>
 
+<div>
+    <h1>Home</h1>
+    <a href="/compose" class="btn btn-info" id="compose">Compose</a>
+    <p> <%= home %> </p>
+</div>
 
-<h1>Home</h1>
-<p> <%= home %> </p>
 
 <div class="row">
 
@@ -18,11 +21,11 @@
                     <%= post.title %>
                 </div>
                 <div class="card-body">
-                  <%= post.desc %>
+                  <%= (post.desc).substring(0,100) %>
                 </div>
                 <div class="card-footer">
                     <div class="d-grid gap-2">
-                        <a href="#" class="btn btn-outline-dark" type="button">View</a>
+                        <a href= "/posts/<%= _.kebabCase(_.lowerCase(post.title)) %>"  class="btn btn-outline-dark" type="button">View</a>
                     </div>
                 </div>
             </div>
