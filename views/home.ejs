@@ -4,7 +4,42 @@
 <h1>Home</h1>
 <p> <%= home %> </p>
 
-<% console.log(postList) %> 
+<div class="row">
+
+    <% postList.forEach(post => { %>
+
+
+        <!-- for(let i = 0;i<postList.length;i++){
+            if
+        } -->
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="card my-2 ">
+                <div class="card-header">
+                    <%= post.title %>
+                </div>
+                <div class="card-body">
+                  <%= post.desc %>
+                </div>
+                <div class="card-footer">
+                    <div class="d-grid gap-2">
+                        <a href="#" class="btn btn-outline-dark" type="button">View</a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="card">
+                <p>  </p>
+                <p>  </p>
+            </div> -->
+        </div>
+
+    <% }) %>
+
+</div>
+
+<!-- <% for( let i = 0; i < postList.length; i++ ) { %>
+    <%  %> 
+<% } %> -->
+
 
 
 <%- include('partials/footer') -%>

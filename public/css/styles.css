@@ -1,3 +1,8 @@
+
+body {
+    background-color: rgb(240, 224, 198);
+}
+
 .container-fluid {
     padding-top: 70px;
     padding-bottom: 70px;
@@ -10,9 +15,18 @@
     margin-bottom: 0;
     font-size: 12px;
     letter-spacing: 5px;
+    background-color: #2dbd85;
+    margin-bottom: 40px;
 }
+
+.navbar-nav  li a {
+    color: #524A4E !important;
+    display: inline;
+    float: left;
+}
+
 .navbar-nav  li a:hover {
-    color: #1abc9c !important;
+    color: rgb(240, 224, 198) !important;
 }
 
 .footer-padding {
@@ -20,16 +34,44 @@
 }
 
 .footer {
-	position: absolute;
+	position: fixed;
 	text-align: center;
 	bottom: 0;
 	width: 100%;
 	height: 60px;
-	background-color: #1abc9c;
+	background-color: #2dbd85;
 }
 
 .footer p {
 	margin-top: 25px;
 	font-size: 12px;
-  color: #fff;
+    color: #fff;
+}
+.card {
+    width: 100%;
+    height: 20vw;
+    object-fit: cover;
+    margin: 5px;
+}
+
+.card-header {
+    background-color: #E7FBBE;
+}
+
+.card-body {
+    background-color: #FFFDDE;
+}
+
+.card-footer {
+    background-color: #F1F7E7;
+}
+
+@media (max-width: 650px){
+    .card {
+        position: absolute;
+        width: 60%;
+        height: 35vw;
+        object-fit: cover;
+        margin: 5px;
+    }
 }
