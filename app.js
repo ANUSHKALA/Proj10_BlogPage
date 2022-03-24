@@ -1,9 +1,8 @@
-//jshint esversion:6
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require('lodash');
+const { default: mongoose } = require("mongoose");
 const app = express();
 app.locals._ = _;
 
@@ -11,11 +10,18 @@ const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui 
 const aboutContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
 const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
 
+mongoose.connect("mongodb://localhost:27017/blogDB");
+
+const blogSchema = {
+  name: String,
+  desc: String,
+}
+
+const Blog = mongoose.model("Blog", blogSchema);
 
 
-const posts = [];
+// const posts = [];
 
-const topic = 
 
 app.set('view engine', 'ejs');
 
@@ -27,11 +33,15 @@ app.use(express.static("public"));
 
 app.get("/",function (req,res){
 
+  Blog.find({}, function (err, result){
+
     res.render("home",{
       home : homeStartingContent,
-      postList: posts,
-      needed : "/posts"+ _.lowerCase(_.kebabCase(posts.title)) 
+      postList: result,
+      needed : "/posts"+ _.lowerCase(_.kebabCase(result.title)) 
     })
+
+  })
 })
 
 
@@ -61,21 +71,23 @@ app.get("/contact",function (req,res){
 app.get("/compose", function (req,res){
 
   res.render("compose")
-  let message = req.body.blog;
+  const message = req.body.blog;
 })
 
 app.post("/compose", function (req,res){
 
-  let messageTitle = req.body.blogTitle;
-  let messageBody = req.body.blogBody;
+  const messageTitle = req.body.blogTitle;
+  const messageBody = req.body.blogBody;
 
-app
-  let post = {
-    title: messageTitle,
-    desc: messageBody
-  }
-  posts.push(post);
-  res.redirect("/")
+  const blog = new Blog({
+    name: messageTitle,
+    desc: messageBody,
+  })
+
+  blog.save();
+
+  // posts.push(post);
+  res.redirect("/");
 
   // console.log(messageTitle);
   // console.log(messageBody);
@@ -118,3 +130,6 @@ app.get("/posts/:topic",function (req,res){
 app.listen(3000, function() {
   console.log("Server active on port 3000");
 });
+
+
+"fdj fdfk fdfk fdfk fdfk fdfk fdfk fdj fdfk jkjd jkjd jkjd jkjd fjkj jkjd fdfk fdfk jkjd jkjd jkjd jkjd df jk jjkk"
