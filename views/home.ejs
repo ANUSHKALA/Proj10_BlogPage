@@ -18,14 +18,14 @@
         <div class="col-lg-3 col-md-6 col-sm-12">
             <div class="card my-2 ">
                 <div class="card-header">
-                    <%= post.title %>
+                    <%= post.name %>
                 </div>
                 <div class="card-body">
                   <%= (post.desc).substring(0,100) %>
                 </div>
                 <div class="card-footer">
                     <div class="d-grid gap-2">
-                        <a href= "/posts/<%= _.kebabCase(_.lowerCase(post.title)) %>"  class="btn btn-outline-dark" type="button">View</a>
+                        <a href= "/posts/<%= _.kebabCase(_.lowerCase(post.name)) %>"  class="btn btn-outline-dark" type="button">View</a>
                     </div>
                 </div>
             </div>

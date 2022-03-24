@@ -10,7 +10,7 @@ const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui 
 const aboutContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
 const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
 
-mongoose.connect("mongodb://localhost:27017/blogDB");
+mongoose.connect("mongodb+srv://admin-anushka:mongodb%404055@cluster0.cvdjs.mongodb.net/blogDB");
 
 const blogSchema = {
   name: String,
@@ -84,52 +84,48 @@ app.post("/compose", function (req,res){
     desc: messageBody,
   })
 
-  blog.save();
+  blog.save(function(err){
 
-  // posts.push(post);
-  res.redirect("/");
-
-  // console.log(messageTitle);
-  // console.log(messageBody);
+    if (!err){
+      res.redirect("/");
+    }
+  });
 })
 
 
 app.get("/posts/:topic",function (req,res){
   const queryTopic = req.params.topic;
-  
-  // res.redirect("/")
 
-  posts.forEach(entry => {
-    const lower = _.lowerCase(entry.title)
-    const kebab = _.kebabCase(lower)
-    if(queryTopic === kebab){
+  Blog.find({}, function (err,result){
 
-      res.render("post",{
-        heading : entry.title,
-        content : entry.desc
-      })
+    result.forEach(entry => {
+      const lower = _.lowerCase(entry.name);
+      const kebab = _.kebabCase(lower);
 
-      console.log( "match found")
-    }
-    else{
-        console.log("page not found")
-    }
-  })
+      if(queryTopic === kebab){
+        console.log( "match found");
 
-
-
-  // res.render('/posts/:topic',{
-  //   urlTitle : queryTopic,
-  // })
+        res.render("post",{
+          heading : entry.name,
+          content : entry.desc
+        })
+      }
+    })   
+  }); 
 })
 
 
 
 
 
-app.listen(3000, function() {
-  console.log("Server active on port 3000");
-});
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+ 
+app.listen(port, function() {
+  console.log('This server is ready to ROCK!!!.');
+});   
 
 
 "fdj fdfk fdfk fdfk fdfk fdfk fdfk fdj fdfk jkjd jkjd jkjd jkjd fjkj jkjd fdfk fdfk jkjd jkjd jkjd jkjd df jk jjkk"
